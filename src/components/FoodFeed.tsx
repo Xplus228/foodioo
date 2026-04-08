@@ -19,7 +19,7 @@ const FoodFeed = ({ posts, savedIds, onSave }: FoodFeedProps) => {
     <div
       ref={containerRef}
       className="h-screen w-full overflow-y-scroll snap-y snap-mandatory hide-scrollbar"
-      onScrollEnd={handleSnapEnd}
+      onScroll={handleSnapEnd}
     >
       {posts.map((post) => (
         <div key={post.id} className="h-screen w-full">
