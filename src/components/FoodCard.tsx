@@ -34,8 +34,6 @@ const FoodCard = ({ post, onSave, isSaved, isLiked, onLike, onAddToCart, onComme
 
   const handleAddToCart = () => {
     onAddToCart(post);
-    setCartToast(true);
-    setTimeout(() => setCartToast(false), 2000);
   };
 
   return (
@@ -83,12 +81,6 @@ const FoodCard = ({ post, onSave, isSaved, isLiked, onLike, onAddToCart, onComme
           <span className="text-xs font-semibold text-foreground">Link kopiert! 🔗</span>
         </div>
       )}
-      {cartToast && (
-        <div className="absolute top-20 right-4 z-20 px-4 py-2 rounded-full gradient-primary animate-fade-in">
-          <span className="text-xs font-semibold text-primary-foreground">Im Warenkorb! 🛒</span>
-        </div>
-      )}
-
       {/* Right side action buttons */}
       <div className="absolute right-3 bottom-56 z-10 flex flex-col items-center gap-5">
         <button onClick={handleLike} className="flex flex-col items-center gap-1">

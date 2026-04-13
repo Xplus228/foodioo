@@ -10,6 +10,8 @@ import CommentsSheet from "@/components/CommentsSheet";
 import TrendingPanel from "@/components/TrendingPanel";
 import TopRestaurantsPanel from "@/components/TopRestaurantsPanel";
 import LimitedOffersPanel from "@/components/LimitedOffersPanel";
+import CartAddedOverlay from "@/components/CartAddedOverlay";
+import PostDetailOverlay from "@/components/PostDetailOverlay";
 import { foodPosts } from "@/data/mockData";
 import type { FoodPost } from "@/data/mockData";
 
@@ -29,6 +31,8 @@ const Index = () => {
   const [trendingOpen, setTrendingOpen] = useState(false);
   const [topRestaurantsOpen, setTopRestaurantsOpen] = useState(false);
   const [limitedOffersOpen, setLimitedOffersOpen] = useState(false);
+  const [cartAddedPost, setCartAddedPost] = useState<FoodPost | null>(null);
+  const [detailPost, setDetailPost] = useState<FoodPost | null>(null);
 
   const handlePLZComplete = useCallback((detectedCity: string) => {
     setCity(detectedCity);
@@ -68,6 +72,7 @@ const Index = () => {
       }
       return [...prev, { post, quantity: 1, addedAt: Date.now() }];
     });
+    setCartAddedPost(post);
   }, []);
 
   const handleAddComment = useCallback((postId: string, text: string) => {
@@ -76,6 +81,11 @@ const Index = () => {
       ...prev,
       [postId]: [...(prev[postId] || []), { text, dish: post?.dish || "" }],
     }));
+  }, []);
+
+  const handleOpenPostDetail = useCallback((post: FoodPost) => {
+    setProfileOpen(false);
+    setDetailPost(post);
   }, []);
 
   const savedItems = foodPosts.filter((p) => savedIds.has(p.id));
@@ -120,6 +130,25 @@ const Index = () => {
           onAddComment={handleAddComment}
         />
       )}
+      {cartAddedPost && (
+        <CartAddedOverlay
+          post={cartAddedPost}
+          onContinue={() => setCartAddedPost(null)}
+          onGoToCart={() => { setCartAddedPost(null); setProfileOpen(true); }}
+        />
+      )}
+      {detailPost && (
+        <PostDetailOverlay
+          post={detailPost}
+          isSaved={savedIds.has(detailPost.id)}
+          isLiked={likedIds.has(detailPost.id)}
+          onSave={handleSave}
+          onLike={handleLike}
+          onAddToCart={handleAddToCart}
+          onComments={setCommentsPost}
+          onClose={() => setDetailPost(null)}
+        />
+      )}
       <ProfilePage
         isOpen={profileOpen}
         onClose={() => setProfileOpen(false)}
@@ -129,6 +158,7 @@ const Index = () => {
         comments={userComments}
         cart={cart}
         onUpdateCart={setCart}
+        onOpenPost={handleOpenPostDetail}
       />
     </div>
   );
