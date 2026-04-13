@@ -17,11 +17,12 @@ interface ProfilePageProps {
   comments: Record<string, { text: string; dish: string }[]>;
   cart: CartItem[];
   onUpdateCart: (cart: CartItem[]) => void;
+  onOpenPost?: (post: FoodPost) => void;
 }
 
 type Tab = "saved" | "liked" | "comments" | "cart";
 
-const ProfilePage = ({ isOpen, onClose, savedItems, likedIds, allPosts, comments, cart, onUpdateCart }: ProfilePageProps) => {
+const ProfilePage = ({ isOpen, onClose, savedItems, likedIds, allPosts, comments, cart, onUpdateCart, onOpenPost }: ProfilePageProps) => {
   const [tab, setTab] = useState<Tab>("cart");
   const [showUpload, setShowUpload] = useState(false);
   const [uploadForm, setUploadForm] = useState({ title: "", description: "", price: "", location: "" });
