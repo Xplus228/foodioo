@@ -15,9 +15,9 @@ const TopBar = ({ city, onMenuOpen, onProfileOpen, cartCount }: TopBarProps) => 
       <div className="flex items-center justify-between">
         {/* Logo + location */}
         <div className="flex items-center gap-3">
-          <img src={logo} alt="Foodio" className="w-9 h-9 rounded-lg" />
+          <img src={logo} alt="Foodio" className="w-12 h-12 rounded-xl shadow-soft transition-transform hover:scale-105" />
           <div>
-            <h1 className="text-sm font-bold text-primary-foreground leading-none">Foodio</h1>
+            <h1 className="text-base font-extrabold text-primary-foreground leading-none tracking-tight">Foodio</h1>
             <div className="flex items-center gap-1 mt-0.5">
               <MapPin className="w-3 h-3 text-primary" />
               <span className="text-xs text-primary-foreground/70">{city}</span>
